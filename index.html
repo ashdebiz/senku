@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SenKu - Dapat 1 Sen Setiap Iklan</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Segoe UI', Arial; text-align: center; background: linear-gradient(135deg, #a8e6cf, #dcedc1); padding: 20px; min-height:100vh; }
+    .container { max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    h1 { color: #2e7d32; font-size: 28px; margin-bottom: 10px; }
+    h2 { color: #388e3c; font-size: 18px; margin-bottom: 20px; }
+    .baki { font-size: 24px; font-weight: bold; color: #1b5e20; margin: 20px 0; }
+    .ad-container { margin: 25px 0; padding: 15px; background: #f5f5f5; border-radius: 12px; }
+    button { background: #4CAF50; color: white; padding: 16px; font-size: 18px; border: none; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    button:hover { background: #388e3c; transform: scale(1.02); }
+    #status { margin-top: 20px; font-weight: bold; color: #1b5e20; }
+    .cashout { background: #ff5722; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SenKu</h1>
+    <h2>Dapat 1 Sen Setiap Iklan!</h2>
+    <div class="baki">Baki: RM<span id="baki">0.00</span></div>
+
+    <div class="ad-container" id="adPlaceholder">
+      <p><strong>Iklan akan muncul di sini</strong></p>
+      <p>(Sedang memuat...)</p>
+    </div>
+
+    <button onclick="tontonIklan()">Tonton Iklan - Dapat 1 Sen</button>
+    <button class="cashout" onclick="cashout()">Cashout (Min RM5)</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    let baki = localStorage.getItem('senku_baki') ? parseFloat(localStorage.getItem('senku_baki')) : 0;
+    document.getElementById('baki').innerText = baki.toFixed(2);
+
+    function updateBaki() {
+      document.getElementById('baki').innerText = baki.toFixed(2);
+      localStorage.setItem('senku_baki', baki);
+    }
+
+    function tontonIklan() {
+      document.getElementById('status').innerText = 'Sedang memuat iklan...';
+      
+      // Simulasi iklan 30 saat
+      setTimeout(() => {
+        baki += 0.01;
+        updateBaki();
+        document.getElementById('status').innerText = '+1 sen ditambah! Terima kasih!';
+        
+        // Nanti: Hantar ke TNG API
+        console.log('1 sen dikreditkan');
+      }, 3000);
+    }
+
+    function cashout() {
+      if (baki < 5) {
+        alert('Minimum RM5 untuk cashout!');
+        return;
+      }
+      const phone = prompt(`Masukkan nombor TNG eWallet untuk terima RM${baki.toFixed(2)}:`);
+      if (phone && confirm(`Hantar RM${baki.toFixed(2)} ke ${phone}?`)) {
+        alert('Cashout sedang diproses... (Nanti auto guna TNG API)');
+        baki = 0;
+        updateBaki();
+      }
+    }
+  </script>
+
+  <!-- Google AdSense akan ditambah selepas approval -->
+</body>
+</html>
