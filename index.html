@@ -3,74 +3,216 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SenKu - Dapat 1 Sen Setiap Iklan</title>
+  <title>SenKu - Dapat Wang Setiap Klik!</title>
+  <meta name="description" content="Dapat 1 sen setiap tonton iklan. Withdraw ke TNG atau bank bila cukup RM5. Mudah & sah!">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: 'Segoe UI', Arial; text-align: center; background: linear-gradient(135deg, #a8e6cf, #dcedc1); padding: 20px; min-height:100vh; }
-    .container { max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-    h1 { color: #2e7d32; font-size: 28px; margin-bottom: 10px; }
-    h2 { color: #388e3c; font-size: 18px; margin-bottom: 20px; }
-    .baki { font-size: 24px; font-weight: bold; color: #1b5e20; margin: 20px 0; }
-    .ad-container { margin: 25px 0; padding: 15px; background: #f5f5f5; border-radius: 12px; }
-    button { background: #4CAF50; color: white; padding: 16px; font-size: 18px; border: none; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; transition: 0.3s; }
-    button:hover { background: #388e3c; transform: scale(1.02); }
-    #status { margin-top: 20px; font-weight: bold; color: #1b5e20; }
-    .cashout { background: #ff5722; margin-top: 15px; }
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      text-align: center; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      min-height:100vh; 
+      color: #333;
+    }
+    .container { 
+      max-width: 420px; 
+      margin: 30px auto; 
+      background: rgba(255,255,255,0.95); 
+      padding: 35px 25px; 
+      border-radius: 28px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+      backdrop-filter: blur(10px);
+    }
+    .logo { font-size: 42px; font-weight: 700; color: #4CAF50; margin-bottom: 8px; }
+    .tagline { font-size: 20px; color: #555; margin-bottom: 30px; font-weight: 500; }
+    .balance-card {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      padding: 25px;
+      border-radius: 20px;
+      margin: 25px 0;
+      box-shadow: 0 10px 25px rgba(76,175,80,0.3);
+    }
+    .balance-label { font-size: 16px; opacity: 0.9; }
+    .balance-amount { font-size: 36px; font-weight: 700; margin: 8px 0; }
+    .progress-container { margin: 25px 0; }
+    .progress-text { font-size: 15px; margin-bottom: 8px; color: #555; }
+    .progress-bar-bg { background: #e0e0e0; height: 12px; border-radius: 6px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.8s ease; border-radius: 6px; }
+    .ad-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 18px;
+      margin: 25px 0;
+      border: 2px dashed #ddd;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      padding: 18px;
+      font-size: 19px;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      width: 100%;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(76,175,80,0.3);
+      transition: all 0.3s;
+      margin-bottom: 15px;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(76,175,80,0.4); }
+    .btn-cashout {
+      background: linear-gradient(135deg, #ff5722, #e64a19);
+      box-shadow: 0 8px 20px rgba(255,87,34,0.3);
+    }
+    .btn-cashout:hover { box-shadow: 0 12px 25px rgba(255,87,34,0.4); }
+    .btn-bonus {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      display: none;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(33,150,243,0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(33,150,243,0); }
+      100% { box-shadow: 0 0 0 0 rgba(33,150,243,0); }
+    }
+    #status { margin-top: 20px; font-weight: 600; font-size: 17px; min-height: 24px; }
+    .footer { margin-top: 40px; font-size: 13px; color: #888; }
   </style>
+
+  <!-- MONETAG CODE (LETK DI SINI BILA DAH DAPAT) -->
+  <!-- Contoh: <script src="https://monetag.com/your-code.js"></script> -->
 </head>
 <body>
   <div class="container">
-    <h1>SenKu</h1>
-    <h2>Dapat 1 Sen Setiap Iklan!</h2>
-    <div class="baki">Baki: RM<span id="baki">0.00</span></div>
+    <div class="logo">SenKu</div>
+    <div class="tagline">Dapat wang setiap klik iklan!</div>
 
-    <div class="ad-container" id="adPlaceholder">
-      <p><strong>Iklan akan muncul di sini</strong></p>
-      <p>(Sedang memuat...)</p>
+    <div class="balance-card">
+      <div class="balance-label">Baki Semasa</div>
+      <div class="balance-amount">RM<span id="baki">0.00</span></div>
     </div>
 
-    <button onclick="tontonIklan()">Tonton Iklan - Dapat 1 Sen</button>
-    <button class="cashout" onclick="cashout()">Cashout (Min RM5)</button>
+    <div class="progress-container">
+      <div class="progress-text">Klik hari ini: <span id="klikHari">0</span>/50 → Bonus RM0.50!</div>
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+
+    <div class="ad-section">
+      <p><strong>Iklan akan muncul di sini</strong></p>
+      <p style="font-size:14px; color:#666;">Klik butang bawah untuk mulakan</p>
+    </div>
+
+    <button class="btn-primary" onclick="tontonIklan()">Tonton Iklan - Dapat 1 Sen</button>
+    <button class="btn-primary btn-cashout" onclick="openWithdrawModal()">Withdraw Baki (Min RM5)</button>
+    <button class="btn-primary btn-bonus" id="bonusBtn" onclick="claimBonus()">Claim Bonus RM0.50!</button>
+
     <div id="status"></div>
+
+    <div class="footer">
+      SenKu © 2025 | Withdraw diproses dalam 24 jam<br>
+      Powered by Monetag
+    </div>
+  </div>
+
+  <!-- WITHDRAW MODAL -->
+  <div id="withdrawModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:20px; width:90%; max-width:400px; box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+      <h3 style="margin-bottom:20px; color:#333;">Withdraw Baki</h3>
+      <p style="margin-bottom:20px;">Baki anda: RM<span id="modalBaki">0.00</span></p>
+
+      <form action="https://formspree.io/f/mgvrebnl" method="POST">
+        <input type="hidden" name="baki" id="formBaki" />
+        <div style="margin:15px 0; text-align:left;">
+          <label style="display:block; margin-bottom:8px; font-weight:600;">Kaedah Pembayaran</label>
+          <select name="method" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd;" onchange="this.form.querySelector('input[name=account]').placeholder = this.value==='tng' ? '60123456789' : '1234567890 (Maybank)'">
+            <option value="tng">TNG eWallet</option>
+            <option value="bank">Akaun Bank</option>
+          </select>
+        </div>
+        <div style="margin:15px 0; text-align:left;">
+          <label style="display:block; margin-bottom:8px; font-weight:600;">Nombor Akaun</label>
+          <input type="text" name="account" placeholder="60123456789" required style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd;" />
+        </div>
+        <div style="margin:15px 0; text-align:left;">
+          <label style="display:block; margin-bottom:8px; font-weight:600;">Nama (pilihan)</label>
+          <input type="text" name="name" placeholder="Ali Baba" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd;" />
+        </div>
+        <button type="submit" style="background:#2196F3; color:white; padding:15px; width:100%; border:none; border-radius:12px; font-size:18px; font-weight:600;">Hantar Permintaan</button>
+        <p style="font-size:13px; margin-top:15px; color:#666;">* Pembayaran diproses dalam 24 jam</p>
+      </form>
+      <button onclick="document.getElementById('withdrawModal').style.display='none'" style="margin-top:15px; background:#ccc; color:#333; padding:10px 20px; border:none; border-radius:10px;">Tutup</button>
+    </div>
   </div>
 
   <script>
     let baki = localStorage.getItem('senku_baki') ? parseFloat(localStorage.getItem('senku_baki')) : 0;
+    let klikHari = localStorage.getItem('senku_klikHari') ? parseInt(localStorage.getItem('senku_klikHari')) : 0;
+    const hariIni = new Date().toDateString();
+
+    if (localStorage.getItem('senku_hari') !== hariIni) {
+      klikHari = 0;
+      localStorage.setItem('senku_klikHari', 0);
+      localStorage.setItem('senku_hari', hariIni);
+    }
+
     document.getElementById('baki').innerText = baki.toFixed(2);
+    document.getElementById('klikHari').innerText = klikHari;
+    updateProgress();
 
     function updateBaki() {
       document.getElementById('baki').innerText = baki.toFixed(2);
       localStorage.setItem('senku_baki', baki);
     }
 
+    function updateProgress() {
+      const percent = Math.min((klikHari / 50) * 100, 100);
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('klikHari').innerText = klikHari;
+      document.getElementById('bonusBtn').style.display = klikHari >= 50 ? 'block' : 'none';
+    }
+
     function tontonIklan() {
-      document.getElementById('status').innerText = 'Sedang memuat iklan...';
+      document.getElementById('status').innerText = 'Memuat iklan... Tekan OK bila selesai.';
       
-      // Simulasi iklan 30 saat
       setTimeout(() => {
         baki += 0.01;
+        klikHari++;
+        localStorage.setItem('senku_klikHari', klikHari);
         updateBaki();
+        updateProgress();
         document.getElementById('status').innerText = '+1 sen ditambah! Terima kasih!';
-        
-        // Nanti: Hantar ke TNG API
-        console.log('1 sen dikreditkan');
-      }, 3000);
+      }, 5000);
     }
 
-    function cashout() {
-      if (baki < 5) {
-        alert('Minimum RM5 untuk cashout!');
-        return;
+    function claimBonus() {
+      if (klikHari >= 50) {
+        baki += 0.50;
+        updateBaki();
+        alert('🎉 Bonus RM0.50 berjaya ditambah!');
+        klikHari = 0;
+        localStorage.setItem('senku_klikHari', 0);
+        updateProgress();
       }
-      const phone = prompt(`Masukkan nombor TNG eWallet untuk terima RM${baki.toFixed(2)}:`);
-      if (phone && confirm(`Hantar RM${baki.toFixed(2)} ke ${phone}?`)) {
-        alert('Cashout sedang diproses... (Nanti auto guna TNG API)');
+    }
+
+    function openWithdrawModal() {
+      if (baki < 5) return alert('Minimum RM5 untuk withdraw!');
+      document.getElementById('withdrawModal').style.display = 'flex';
+      document.getElementById('modalBaki').innerText = baki.toFixed(2);
+      document.getElementById('formBaki').value = baki.toFixed(2);
+    }
+
+    document.querySelector('form').addEventListener('submit', function() {
+      setTimeout(() => {
+        alert('✅ Permintaan withdraw berjaya dihantar! Kami proses dalam 24 jam.');
         baki = 0;
         updateBaki();
-      }
-    }
+        document.getElementById('withdrawModal').style.display = 'none';
+      }, 500);
+    });
   </script>
-
-  <!-- Google AdSense akan ditambah selepas approval -->
 </body>
 </html>
